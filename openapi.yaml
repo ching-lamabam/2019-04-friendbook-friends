@@ -1,0 +1,288 @@
+openapi: 3.0.0
+servers: []
+info:
+  description: Maintain friends relationship for users
+  version: 0.1.0
+  title: Friendbook Friend Service
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags: []
+paths:
+  /friend/request:
+    get:
+      summary: Gets the existing friend request
+      description: ''
+      parameters:
+        - name: userEmail
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Email Id of the user
+      operationId: getExistingFriendRequests
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                - toEmail: ''
+                  fromEmail: ''
+                  status: ''
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema: {}
+    post:
+      summary: 'Post a friend request '
+      description: Post a friend request from the current user to an existing user
+      parameters:
+        - name: userEmail
+          in: path
+          required: true
+          schema:
+            type: string
+          description: EmailId of existing user
+          deprecated: false
+      operationId: addFriendRequest
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema: {}
+      requestBody:
+        content:
+          '*/*':
+            required: false
+            schema:
+              toEmail: ''
+        description: Friend to add request
+        required: true
+    put:
+      summary: Accepts or rejects a friend request
+      description: 'Accepts or rejects an existing friend request '
+      parameters:
+        - name: userEmail
+          in: path
+          required: true
+          schema: {}
+          description: Email Id of the user to approve the request
+      operationId: updateFriendRequest
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not able to update request
+          content:
+            application/json:
+              schema: {}
+      requestBody:
+        content:
+          '*/*':
+            required: false
+            schema:
+              $ref: '#/components/schemas/Friend'
+    delete:
+      summary: Delete an existing friend request
+      description: Delete an existing friend request which is in pending status
+      parameters:
+        - name: userEmail
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 'Email Id of the user '
+        - name: fromEmail
+          in: query
+          required: true
+          schema:
+            type: string
+      operationId: deleteFriendRequest
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Description
+          content:
+            application/json:
+              schema: {}
+  /friend:
+    get:
+      summary: Get all friends for user
+      description: ''
+      parameters:
+        - name: userEmail
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Email Id of user
+      operationId: getFriendList
+      responses:
+        '200':
+          description: Description
+          content:
+            application/json:
+              schema:
+                - toEmail: ''
+                  fromEmail: ''
+                  status: ''
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema: {}
+    delete:
+      summary: removes a friend for user
+      description: ''
+      parameters:
+        - name: userEmail
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Email Id of user
+        - name: fromEmail
+          in: query
+          required: false
+          schema:
+            type: string
+          description: 'Friend email Id to remove '
+      operationId: removeFriend
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema: {}
+  /friend/count:
+    get:
+      summary: Get count of friends for user
+      description: ''
+      parameters:
+        - name: userEmail
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Email Id of user
+      operationId: getFriendCount
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                count: ''
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema: {}
+  /friend/suggestions:
+    get:
+      summary: Get Friend suggestions for user
+      description: ''
+      parameters:
+        - name: userEmail
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Email Id of user
+      operationId: getFriendSuggestions
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                - toEmail: ''
+                  fromEmail: ''
+                  status: ''
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema: {}
+  /friend/mutual:
+    get:
+      summary: Get Mutual Friends
+      description: ''
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Email Id of user
+      operationId: getMutualFriends
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                - toEmail: ''
+                  fromEmail: ''
+                  status: ''
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema: {}
+externalDocs:
+  description: See AsyncAPI example
+  url: 'https://mermade.github.io/shins/asyncapi.html'
+components:
+  schemas:
+    Friend:
+      toEmail: ''
+      fromEmail: ''
+      status: ''
+  requestBodies:
+    Pet:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Pet'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Pet'
+      description: Pet object that needs to be added to the store
+      required: true
+    UserArray:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+      description: List of user object
+      required: true
+  securitySchemes: {}
+  links: {}
+  callbacks: {}
+security: []
