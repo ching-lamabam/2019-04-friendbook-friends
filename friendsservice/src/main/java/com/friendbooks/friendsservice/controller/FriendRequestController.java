@@ -31,10 +31,6 @@ public class FriendRequestController {
     @RequestMapping(method = RequestMethod.PUT, value="/friend/request/{userEmail}")
     public void acceptRequest(@PathVariable("userEmail") String fromMail){
         // accept
-    }
-
-    @RequestMapping(method = RequestMethod.PUT, value="/friend/request/{userEmail}")
-    public void rejectRequestFrom(@PathVariable("userEmail") String fromEmail,@PathVariable("userEmail") String  toemail){
         // reject
     }
 
@@ -60,10 +56,10 @@ public class FriendRequestController {
     public String getFriendsCount(@PathVariable("userEmail") String UserEmail){
         return "10";
     }
-    @RequestMapping(method = RequestMethod.GET, value="/friend/request/{userEmail}")
+    @RequestMapping(method = RequestMethod.GET, value="/friend/suggestions/{userEmail}")
     @ResponseBody
-    public String getFriendSuggestionsFor(@PathVariable("userEmail") String UserEmail){
-        return "Welcome ";
+    public List getFriendSuggestionsFor(@PathVariable("userEmail") String UserEmail){
+        return Arrays.asList(new String[]{"xyz@gmail.com", "abc@xmail.com"});
     }
 
     @RequestMapping(method = RequestMethod.GET, value="/friend/mutual/{userEmail}/and/{toEmail}")
