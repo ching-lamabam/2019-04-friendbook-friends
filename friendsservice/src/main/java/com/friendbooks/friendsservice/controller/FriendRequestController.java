@@ -24,24 +24,29 @@ public class FriendRequestController {
             @PathVariable("userEmail") String userEmail )
     {
         friendRequest.setFromEmail(userEmail);
+        friendRequest.setStatus("pending");
         service.addRequest(friendRequest);
         
     }
 
     @RequestMapping(method = RequestMethod.PUT, value="/friend/request/{userEmail}")
+    @ResponseBody
     public void acceptRequest(
             @RequestBody FriendRequest friendRequest,
-            @PathVariable("userEmail") String fromMail)
+            @PathVariable("userEmail") String userEmail)
     {
         // accept
         // reject
+        friendRequest.setFromEmail(userEmail);
+        service.update(friendRequest);
+
     }
 
     @RequestMapping(method = RequestMethod.GET, value="/friend/request/{userEmail}")
     @ResponseBody
     public List getRequestFor(@PathVariable("userEmail") String userEmail)
     {
-        return Arrays.asList(new String[]{"xyz@gmail.com", "abc@xmail.com"});
+        return service.getALlPendingRequest();
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value="/friend/{fromEmail}/with/{withEmail}")
@@ -61,6 +66,7 @@ public class FriendRequestController {
     public String getFriendsCount(@PathVariable("userEmail") String UserEmail){
         return "10";
     }
+
     @RequestMapping(method = RequestMethod.GET, value="/friend/suggestions/{userEmail}")
     @ResponseBody
     public List getFriendSuggestionsFor(@PathVariable("userEmail") String UserEmail){

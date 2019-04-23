@@ -1,11 +1,14 @@
 package com.friendbooks.friendsservice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.friendbooks.friendsservice.dao.FriendDAO;
 import com.friendbooks.friendsservice.dto.FriendRequest;
 import com.friendbooks.friendsservice.entity.FriendEntity;
+
+import java.util.List;
 
 @Service
 public class FriendRequestService {
@@ -17,10 +20,18 @@ public class FriendRequestService {
 		FriendEntity entity = new FriendEntity();
 		entity.setFromEmail(friendRequest.getFromEmail());
 		entity.setToEmail(friendRequest.getToEmail());
-		entity.setStatus("Pending");
+		entity.setStatus("pending");
         friendDAO.save(entity);		
 	}
 	
-	
-	
+	public List<FriendEntity> getALlPendingRequest(){
+        List<FriendEntity> pendingFriendRequest = friendDAO.findAllByStatus("pending");
+        return pendingFriendRequest;
+	}
+
+    public FriendEntity update(FriendRequest friendRequest) {
+        FriendEntity record = friendDAO.findByFromEmailAndToEmail(friendRequest.getFromEmail(),friendRequest.getToEmail());
+	    record.setStatus(friendRequest.getStatus());
+        return friendDAO.save(record);
+    }
 }
