@@ -50,9 +50,12 @@ public class FriendRequestController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value="/friend/{fromEmail}/with/{withEmail}")
-    public void removeFriend(@PathVariable("fromEmail") String fromEmail,@PathVariable("withEmail") String  withEmail)
+    @ResponseBody
+    public void removeFriend(@PathVariable("fromEmail") String fromEmail,
+                             @PathVariable("withEmail") String  withEmail)
     {
         // delete relation
+        service.delete(fromEmail,withEmail);
     }
 
     @RequestMapping(method = RequestMethod.GET, value="/friend/{userEmail}")

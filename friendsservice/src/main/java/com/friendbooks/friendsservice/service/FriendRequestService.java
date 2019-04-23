@@ -34,4 +34,10 @@ public class FriendRequestService {
 	    record.setStatus(friendRequest.getStatus());
         return friendDAO.save(record);
     }
+
+    public void delete(String fromEmail, String toEmail)
+    {
+        FriendEntity record = friendDAO.findByFromEmailAndToEmail(fromEmail, toEmail);
+        friendDAO.delete(record);
+    }
 }
