@@ -8,7 +8,7 @@ import javax.persistence.Table;
  
 @Entity
 @Table(name = "FriendRequest")
-public class FriendRequest {
+public class FriendEntity {
  
     @Id
     @GeneratedValue

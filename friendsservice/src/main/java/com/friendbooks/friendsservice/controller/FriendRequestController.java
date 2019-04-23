@@ -1,6 +1,9 @@
 package com.friendbooks.friendsservice.controller;
 
 import com.friendbooks.friendsservice.dto.FriendRequest;
+import com.friendbooks.friendsservice.service.FriendRequestService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +14,9 @@ import java.util.List;
 @Controller
 public class FriendRequestController {
 
+	@Autowired
+	FriendRequestService service;
+	
     @RequestMapping(method = RequestMethod.POST, value="/friend/request/{userEmail}")
     @ResponseBody
     public void addRequest(
@@ -18,7 +24,8 @@ public class FriendRequestController {
             @PathVariable("userEmail") String userEmail )
     {
         friendRequest.setFromEmail(userEmail);
-        System.out.println(friendRequest.toString());
+        service.addRequest(friendRequest);
+        
     }
 
     @RequestMapping(method = RequestMethod.PUT, value="/friend/request/{userEmail}")
