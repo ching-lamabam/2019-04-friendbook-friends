@@ -15,4 +15,8 @@ public interface FriendDAO extends JpaRepository<FriendEntity, Long> {
     List<FriendEntity> findAllByStatus(String status);
 
     FriendEntity findByFromEmailAndToEmail(String fromEmail, String toEmail);
+    
+    List<FriendEntity> findByFromEmail(String fromEmail);
+    
+    List<FriendEntity> findByToEmail(String toEmail);
 }

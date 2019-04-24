@@ -66,20 +66,22 @@ public class FriendRequestController {
 
     @RequestMapping(method = RequestMethod.GET, value="/friend/count/{userEmail}")
     @ResponseBody
-    public String getFriendsCount(@PathVariable("userEmail") String UserEmail){
-        return "10";
+    public int getFriendsCount(@PathVariable("userEmail") String UserEmail){
+        return service.getCount(UserEmail);
     }
 
     @RequestMapping(method = RequestMethod.GET, value="/friend/suggestions/{userEmail}")
     @ResponseBody
     public List getFriendSuggestionsFor(@PathVariable("userEmail") String UserEmail){
-        return Arrays.asList(new String[]{"xyz@gmail.com", "abc@xmail.com"});
+        
+        return service.getFriendSuggestionsFor(UserEmail);
     }
 
     @RequestMapping(method = RequestMethod.GET, value="/friend/mutual/{userEmail}/and/{toEmail}")
     @ResponseBody
     public List getMutualFriends(@PathVariable("userEmail") String UserEmail)
     {
-        return Arrays.asList(new String[]{"xyz@gmail.com", "abc@xmail.com"});
+        //return Arrays.asList(new String[]{"xyz@gmail.com", "abc@xmail.com"});
+    	return Arrays.asList(new String[]{"xyz@gmail.com", "abc@xmail.com"});
     }
 }

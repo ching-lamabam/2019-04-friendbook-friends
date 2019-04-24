@@ -8,7 +8,12 @@ import com.friendbooks.friendsservice.dao.FriendDAO;
 import com.friendbooks.friendsservice.dto.FriendRequest;
 import com.friendbooks.friendsservice.entity.FriendEntity;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class FriendRequestService {
@@ -17,6 +22,10 @@ public class FriendRequestService {
 	FriendDAO friendDAO;
 
 	public void addRequest(FriendRequest friendRequest) {
+		// Plan for Failure 
+		// 1 500 internal unplanned
+		// 2 service taking long time
+		// 3 service endpoint cannot be located
 		FriendEntity entity = new FriendEntity();
 		entity.setFromEmail(friendRequest.getFromEmail());
 		entity.setToEmail(friendRequest.getToEmail());
@@ -40,4 +49,30 @@ public class FriendRequestService {
         FriendEntity record = friendDAO.findByFromEmailAndToEmail(fromEmail, toEmail);
         friendDAO.delete(record);
     }
+
+	public int getCount(String userEmail) {
+		
+		List<FriendEntity> allfriends = getAllFriends(userEmail);
+		Set<FriendEntity> uniqueFriends = new HashSet<>(allfriends);
+		return uniqueFriends.size();
+	}
+
+	public List<FriendEntity> getAllFriends(String userEmail) {
+		List<FriendEntity> allfriends = friendDAO.findByFromEmail(userEmail);
+		allfriends.addAll(allfriends);
+		return allfriends;
+	}
+
+	public List getFriendSuggestionsFor(String userEmail) {
+		Set<FriendEntity> friendSuggestions = new HashSet<>();
+		for(FriendEntity friend :getAllFriends(userEmail)) {
+			friendSuggestions.addAll(getAllFriends(friend.getToEmail()));
+			friendSuggestions.addAll(getAllFriends(friend.getFromEmail()));
+		}
+		List<String> emails = 
+				friendSuggestions.stream()
+			              .map(FriendEntity::getFromEmail)
+			              .collect(Collectors.toList());
+		return emails;
+	}
 }
