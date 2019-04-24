@@ -1,0 +1,29 @@
+version: '3.4'
+
+networks:
+  friendsnet:
+
+volumes:
+  friendsdata:
+
+services:
+
+  friendssvc:
+    build:
+      dockerfile: friendsService.Dockerfile
+      context: .
+    networks:
+      - friendsnet
+    ports:
+      - 8080
+
+  friendsdb:
+    image: postgres:9-alpine
+    networks: 
+      - friendsnet
+    volumes:
+      - friendsdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=friendsdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
