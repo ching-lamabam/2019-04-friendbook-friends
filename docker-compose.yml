@@ -16,6 +16,8 @@ services:
       - friendsnet
     ports:
       - 8080
+    environment:
+      - DB_HOST=http://friendsdb
 
   friendsdb:
     image: postgres:9-alpine

@@ -1,7 +1,7 @@
 FROM maven:3.6.1-jdk-8-alpine AS buildstage
 WORKDIR /friendsservice
 COPY friendsservice/ .
-RUN mvn package
+RUN mvn package -DskipTests
 
 FROM openjdk:8-jre-alpine3.9
 WORKDIR /friendsserviceapp
