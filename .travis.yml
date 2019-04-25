@@ -4,4 +4,6 @@ services:
 script:
     - docker-compose ls
     - docker-compose build
-    - docker-compose ls
+    - docker-compose up -d
+    - docker-compose ps
+    - docker-compose logs friendssvc
