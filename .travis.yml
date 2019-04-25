@@ -7,13 +7,13 @@ script:
     - docker-compose up -d
     - docker-compose ps
     - docker-compose logs friendssvc
-    - sleep 2m
+    - sleep 1m
     - curl http://localhost:8080/friend/request/test@test.com
     - docker-compose logs friendssvc
 
 after_success:
     - docker image ls
-    - docker image tag friendssvc $DOCKER_USERID/friendssvc
+    - docker image tag friendssvc-image $DOCKER_USERID/friendssvc
     - docker image ls
     - docker login -u $DOCKER_USERID -p $DOCKER_PWD
     - docker push $DOCKER_USERID/friendssvc
