@@ -15,7 +15,7 @@ services:
     networks:
       - friendsnet
     ports:
-      - 8080
+       - 8080 : 8080
     environment:
       - DB_HOST=http://friendsdb
     image: friendssvc-image

@@ -2,8 +2,9 @@ services:
     - docker
 
 script:
-    - docker-compose ls
+    - docker-compose ps
     - docker-compose build
     - docker-compose up -d
     - docker-compose ps
     - docker-compose logs friendssvc
+    - curl http://localhost:8080/friend/request/test@test.com
