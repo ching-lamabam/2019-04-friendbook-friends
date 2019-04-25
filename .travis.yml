@@ -15,6 +15,6 @@ after_success:
     - docker image ls
     - docker image tag friendssvc $DOCKER_USERID/friendssvc
     - docker image ls
-    - docker login -u $DOCKER_USERID -p $DOCKER_USERID
+    - docker login -u $DOCKER_USERID -p $DOCKER_PWD
     - docker push $DOCKER_USERID/friendssvc
     - docker logout
