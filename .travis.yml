@@ -1,5 +1,5 @@
-dist: xenial
-language: java
-
 services:
     - docker
+
+script:
+    - docker-compose build
