@@ -1,4 +1,4 @@
-services:
+ervices:
     - docker
 
 script:
@@ -7,4 +7,14 @@ script:
     - docker-compose up -d
     - docker-compose ps
     - docker-compose logs friendssvc
+    - sleep 2m
     - curl http://localhost:8080/friend/request/test@test.com
+    - docker-compose logs friendssvc
+
+after_success:
+    - docker image ls
+    - docker image tag friendssvc $DOCKER_USERID/friendssvc
+    - docker image ls
+    - docker login -u $DOCKER_USERID -p $DOCKER_USERID
+    - docker push $DOCKER_USERID/friendssvc
+    - docker logout
