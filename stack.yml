@@ -9,16 +9,13 @@ volumes:
 services:
 
   friendssvc:
-    build:
-      dockerfile: friendsService.Dockerfile
-      context: .
     networks:
       - friendsnet
     ports:
-       - "8080:8080"
+       - 8080:8080
     environment:
       - DB_HOST=friendsdb
-    image: friendssvc-image
+    image: jsagar87/friendssvc-image
 
   friendsdb:
     image: postgres:9-alpine
